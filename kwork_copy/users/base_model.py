@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 
 
@@ -8,7 +9,7 @@ class BaseProfile(models.Model):
         FREELANCER = 'FL', 'Фрилансер'
 
     user = models.OneToOneField(
-        'users.User',
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         verbose_name='Пользователь',
         help_text='Пользователь',
@@ -18,6 +19,8 @@ class BaseProfile(models.Model):
         verbose_name='Имя',
         help_text='Имя пользователя',
         max_length=50,
+        blank=True,
+        null=True,
     )
     contact_info = models.TextField(
         verbose_name='Контактная информация',
@@ -35,9 +38,7 @@ class BaseProfile(models.Model):
         verbose_name='Роль',
         help_text='Роль пользователя',
         max_length=9,
-        blank=True,
         choices=Role.choices,
-        default=Role.FREELANCER,
     )
 
     def __str__(self):
@@ -48,24 +49,6 @@ class BaseProfile(models.Model):
         verbose_name = 'Профиль пользователя'
         verbose_name_plural = 'Профили пользователей'
         ordering = ['name']
-
-    def get_absolute_url(self):
-        return f'/{self.__name__.lower()}/{self.pk}/'
-
-    def get_edit_url(self):
-        return f'/{self.__name__.lower()}/{self.pk}/edit/'
-
-    def get_delete_url(self):
-        return f'/{self.__name__.lower()}/{self.pk}/delete/'
-
-    def get_list_url(self):
-        return f'/{self.__name__.lower()}/'
-
-    def get_create_url(self):
-        return f'/{self.__name__.lower()}/create/'
-
-    def get_update_url(self):
-        return f'/{self.__name__.lower()}/{self.pk}/update/'
 
     @property
     def is_freelancer(self):
