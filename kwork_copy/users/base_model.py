@@ -46,9 +46,6 @@ class BaseProfile(models.Model):
 
     class Meta:
         abstract = True
-        verbose_name = 'Профиль пользователя'
-        verbose_name_plural = 'Профили пользователей'
-        ordering = ['name']
 
     @property
     def is_freelancer(self):

@@ -32,6 +32,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
                                         username=validated_data['username'],
                                         )
         user.set_password(validated_data['password'])
+        user.is_staff = True
         user.save()
         if profile_role == CustomerProfile.Role.CUSTOMER:
             profile = CustomerProfile.objects.create(user=user,

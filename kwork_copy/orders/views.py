@@ -13,14 +13,9 @@ from .models import Order
 
 
 class OrderViewSet(GenericViewSet):
+    queryset = Order.objects.all()
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsOwnerOrReadOnly, IsAuthenticated]
-
-    def get_object(self, pk):
-        try:
-            return Order.objects.get(pk=pk)
-        except Order.DoesNotExist:
-            return Http404
 
     @action(detail=False, methods=['get'])
     def list_orders(self, request):
@@ -30,13 +25,13 @@ class OrderViewSet(GenericViewSet):
 
     @action(detail=True, methods=['get'])
     def retrieve_order(self, request, pk):
-        order = self.get_object(pk)
+        order = self.get_object()
         serializer = OrderSerializer(order, partial=True)
         return Response(serializer.data)
 
     @action(detail=True, methods=['patch'])
     def update_order(self, request, pk):
-        order = self.get_object(pk)
+        order = self.get_object()
         serializer = OrderSerializer(order, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
@@ -45,7 +40,7 @@ class OrderViewSet(GenericViewSet):
 
     @action(detail=True, methods=['delete'])
     def delete_order(self, request, pk):
-        order = self.get_object(pk)
+        order = self.get_object()
         order.delete()
         return Response('Order deleted successfully', status=status.HTTP_204_NO_CONTENT)
 
