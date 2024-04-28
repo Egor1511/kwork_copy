@@ -18,3 +18,7 @@ Postman collection (Main folder - Kwork_copy API)
 ```
 https://www.postman.com/supply-cosmologist-43454487/workspace/github-test-tasks/collection/31564096-e1bfcd5a-7b48-4422-9e75-fada9e828367
 ```
+The user's personal account is presented at
+```
+https://effira12.pythonanywhere.com/cabinet/
+```
